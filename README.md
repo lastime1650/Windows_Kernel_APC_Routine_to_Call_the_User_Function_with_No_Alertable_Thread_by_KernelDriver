@@ -21,6 +21,7 @@
 
 > [!CAUTION]
 > UserMode APC 등록하여 사용할때에, **특정 유저 프로세스의 함수와 인자개수에 따라 호출(최대3개의 인자 인젝션 가능) 이 가능하므로, 유저함수 호출 인젝션이 가능합니다.**
+> 이에 따라 매우 쉽게 Dll 인젝션이 가능합니다.
 
 
 ## 목차
@@ -1448,7 +1449,7 @@ static VOID ReleaseOwnershipDemo(POWNERSHIP_DEMO state)
 
 ## 공격 응용
 
-### 공격자가 원하는 유저 함수를 호출할 수 있음.
+### (A) DLL Injection
 
 #### 커널 코드에서 UserMode APC를 통하여 LoadLibraryA를 사용하려는 경우..
 
