@@ -1,0 +1,62 @@
+;
+; NoAlertableApcTest.inf
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System ; TODO: specify appropriate Class
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider    = %ManufacturerName%
+CatalogFile = NoAlertableApcTest.cat
+DriverVer   = ; TODO: set DriverVer in stampinf property pages
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+NoAlertableApcTest.sys = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName% = Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+
+[Standard.NT$ARCH$.10.0...16299]
+%NoAlertableApcTest.DeviceDesc% = NoAlertableApcTest_Device, Root\NoAlertableApcTest ; TODO: edit hw-id
+
+[NoAlertableApcTest_Device.NT]
+CopyFiles = File_Copy
+
+[File_Copy]
+NoAlertableApcTest.sys
+
+;-------------- Service installation
+[NoAlertableApcTest_Device.NT.Services]
+AddService = NoAlertableApcTest,%SPSVCINST_ASSOCSERVICE%, NoAlertableApcTest_Service_Inst
+
+; -------------- NoAlertableApcTest driver install sections
+[NoAlertableApcTest_Service_Inst]
+DisplayName    = %NoAlertableApcTest.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\NoAlertableApcTest.sys
+
+[NoAlertableApcTest_Device.NT.Wdf]
+KmdfService = NoAlertableApcTest, NoAlertableApcTest_wdfsect
+
+[NoAlertableApcTest_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "NoAlertableApcTest Installation Disk"
+NoAlertableApcTest.DeviceDesc = "NoAlertableApcTest Device"
+NoAlertableApcTest.SVCDESC = "NoAlertableApcTest Service"

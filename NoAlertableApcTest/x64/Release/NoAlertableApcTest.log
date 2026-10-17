@@ -1,0 +1,27 @@
+﻿  Building 'NoAlertableApcTest' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\NoAlertableApcTest.inf
+  Stamping [Version] section with DriverVer=10/17/2026,14.27.0.972
+  main.cpp
+  NoAlertableApcTest.vcxproj -> C:\Users\Administrator\source\repos\NoAlertableApcTest\x64\Release\NoAlertableApcTest.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Administrator\source\repos\NoAlertableApcTest\x64\Release\NoAlertableApcTest.sys
+  
+  Driver is 'Universal'.
+  ........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  C:\Users\Administrator\source\repos\NoAlertableApcTest\x64\Release\NoAlertableApcTest\noalertableapctest.cat
+  Set catalog attribute.
+  WdkVersion: 10.0.26100.0
+  Set catalog attribute.
+  WdkAssemblyVersion: 10.0.26100.6584
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Administrator\source\repos\NoAlertableApcTest\x64\Release\NoAlertableApcTest\noalertableapctest.cat
+  
