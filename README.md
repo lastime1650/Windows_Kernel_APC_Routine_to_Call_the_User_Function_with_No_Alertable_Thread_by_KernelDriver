@@ -1161,7 +1161,7 @@ Alertable    : FALSE
 
 다음은 실험에서 사용한 **설계와 소스 형태를 기록**하는 구간입니다. 원본에 남아 있는 자원 해제·예외 처리·드라이버 언로드 문제까지 해결됐다는 뜻이 아닙니다.
 
-### 커널 PoC의 구조
+### [커널 PoC](https://github.com/lastime1650/Windows_Kernel_APC_Routine_to_Call_the_User_Function_with_No_Alertable_Thread_by_KernelDriver/blob/48f44cd54f78ff5994117b8867e758bcf1d6c325/NoAlertableApcTest/apc.hpp#L129)의 구조
 
 ```text
 RegisterUserApc(ProcessId, ThreadId, UserApcFunction)
