@@ -1,6 +1,6 @@
 ﻿  Building 'NoAlertableApcTest' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping x64\Release\NoAlertableApcTest.inf
-  Stamping [Version] section with DriverVer=10/17/2026,14.27.0.972
+  Stamping [Version] section with DriverVer=10/17/2026,15.28.50.486
   main.cpp
   NoAlertableApcTest.vcxproj -> C:\Users\Administrator\source\repos\NoAlertableApcTest\x64\Release\NoAlertableApcTest.sys
   Done Adding Additional Store

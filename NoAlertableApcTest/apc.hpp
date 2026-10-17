@@ -127,9 +127,12 @@ extern "C" {
 // ──────────────────────────────────────────────────────────────
 
 NTSTATUS RegisterUserApc(
-    HANDLE  ProcessId,
-    HANDLE  ThreadId,
-    PVOID   UserApcFunction     // 유저모드 함수 주소 ( KNORMAL_ROUTINE 함수 원형을 따라야함 )
+    _In_ HANDLE  ProcessId,
+    _In_ HANDLE  ThreadId,
+    _In_ PVOID   UserApcFunction,     // 유저모드 함수 주소
+    _In_opt_ PVOID   NormalContext,
+    _In_opt_ PVOID   NormalSystemParameter1,
+    _In_opt_ PVOID   NormalSystemParameter2
 )
 {
     NTSTATUS    status = STATUS_SUCCESS;
@@ -214,7 +217,7 @@ NTSTATUS RegisterUserApc(
         ApcRundownRoutine,                       // Rundown routine
         (PKNORMAL_ROUTINE)UserApcFunction,       // ← 유저모드 함수 주소
         UserMode,                                // 커널모드는 Alertable no 상태에서  APC
-        NULL                                     // NormalContext (필요시 전달)
+        NormalContext                               // NormalContext (필요시 전달)
     );
 
 
@@ -232,7 +235,7 @@ NTSTATUS RegisterUserApc(
 
     // ── 7. APC 큐 삽입 ────────────────────────────────────────
 
-    if (!KeInsertQueueApc(Uapc, NULL, NULL, IO_NO_INCREMENT)) {
+    if (!KeInsertQueueApc(Uapc, NormalSystemParameter1, NormalSystemParameter2, IO_NO_INCREMENT)) {
         // 삽입 실패 = 스레드가 이미 종료 중이거나 APC 불가 상태
         status = STATUS_UNSUCCESSFUL;
         ExFreePoolWithTag(Uapc, APC_POOL_TAG);
